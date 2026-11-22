@@ -1,0 +1,117 @@
+/* =========================================================
+   Design Tokens – "בוקר ראשון בבית"
+   Scandinavian Premium · Lookbook editorial
+   החלפת מותג = עדכון קובץ זה + src/lib/brand.ts
+   ========================================================= */
+:root {
+  /* ---- Palette (מבוסס על פלטת האפיון, עם משקל חדש) ---- */
+  --ivory: #F8F3E3;        /* Warm Ivory – רקע ראשי */
+  --sand: #EFE8D4;         /* Soft Sand – אזורים משניים */
+  --linen: #E6DFCC;        /* גוון עמוק יותר של חול – מסגרות תמונה ורקעי מוצר */
+  --white: #FFFFFF;
+  --sage: #788579;         /* Muted Sage – משטחים ודגשים */
+  --sage-soft: #DDE3D3;
+  --moss: #23402B;         /* Sage עמוק – כפתורים, טקסט מודגש, פס עליון */
+  --rose: #C49A91;         /* Dusty Rose – רק בהערות האישיות של האמא */
+  --rose-soft: #F3E1D6;
+  --ink: #141414;          /* Deep Charcoal */
+  --grey: #5C5953;         /* Warm Grey (מוכהה מעט לעמידה ב-AA) */
+  --line: #D9D2BF;         /* Soft Stone */
+  --success: #55745D;
+  --sale: #74261F;         /* Terracotta לטקסט מבצע בלבד */
+  --error: #A3483A;
+
+  /* aliases לרכיבים קיימים */
+  --color-bg: var(--ivory);
+  --color-bg-alt: var(--sand);
+  --color-surface: var(--white);
+  --color-brand: var(--sage);
+  --color-brand-strong: var(--moss);
+  --color-brand-soft: var(--sage-soft);
+  --color-accent: var(--rose);
+  --color-accent-soft: var(--rose-soft);
+  --color-text: var(--ink);
+  --color-text-muted: var(--grey);
+  --color-border: var(--line);
+  --color-success: var(--success);
+  --color-sale: var(--sale);
+  --color-sale-text: var(--sale);
+  --color-error: var(--error);
+  --color-focus: var(--moss);
+
+  /* גווני placeholder (כשאין תמונה) */
+  --tone-sage: #D5DBD1;   --tone-sage-ink: #A3AE9F;
+  --tone-rose: #EBD9D3;   --tone-rose-ink: #CFA89E;
+  --tone-sand: #E9E1D4;   --tone-sand-ink: #CDBEA6;
+  --tone-stone: #E2DED7;  --tone-stone-ink: #B9B2A6;
+  --tone-terracotta: #EBD6CC; --tone-terracotta-ink: #CC9C88;
+  --tone-ivory: #F2EEE6;  --tone-ivory-ink: #D6CDBE;
+
+  /* ---- Typography ----
+     Display: Bellefair – סריף עברי עדין ונמוך-ניגוד, תחושת לוקבוק מודפס
+     Text/UI: Assistant – סנס הומניסטי ורך (החלופה שהאפיון מציע ל-Heebo) */
+  --font-display: "Unbounded Variable", "Rubik", system-ui, sans-serif;   /* לטינית: Unbounded, עברית נופלת ל-Rubik */
+  --font-he-display: "Rubik", system-ui, sans-serif;
+  --font-serif: "Bellefair", Georgia, serif;
+  --font-sans: "IBM Plex Sans Hebrew", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --wine: #74261F;
+  --wine-ink: #5E1D17;
+  --forest: #23402B;
+  --stone: #D9D5CB;
+
+  --fs-hero: clamp(3rem, 1.6rem + 6vw, 7.25rem);       /* 48 → 116 */
+  --fs-h2: clamp(2.125rem, 1.5rem + 2.6vw, 3.75rem);   /* 34 → 60 */
+  --fs-h3: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);        /* 24 → 32 */
+  --fs-index: clamp(2rem, 1.2rem + 3.4vw, 4.5rem);     /* רשימת הקטגוריות */
+  --fs-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem);
+  --fs-product: 1rem;
+  --fs-body: 1.0625rem;  /* 17px – Assistant רץ קטן */
+  --fs-small: 0.875rem;
+  --fs-micro: 0.8125rem;
+  --fs-button: 0.9375rem;
+  --lh-display: 1.02;
+  --lh-tight: 1.15;
+  --lh-body: 1.6;
+
+  /* ---- Spacing (4px base) ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --s-6: 24px; --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-16: 64px;
+  --s-20: 80px; --s-24: 96px; --s-32: 128px;
+  --section-gap: clamp(72px, 4rem + 5vw, 160px);
+
+  /* ---- Layout ---- */
+  --container-max: 1320px;
+  --gutter: clamp(20px, 4vw, 64px);
+  --header-h: 64px;
+
+  /* ---- Radius: היררכיה ולא ערך אחד לכל דבר ---- */
+  --r-img: 2px;      /* תמונות – כמעט חדות, כמו הדפסה */
+  --r-sm: 6px;       /* שדות קלט */
+  --r-btn: 999px;    /* כפתורים – גלולה */
+  --r-card: 2px;
+  --r-lg: 4px;
+  --r-pill: 999px;
+
+  /* ---- Elevation (רק לחלוניות צפות) ---- */
+  --shadow-sm: none;
+  --shadow-md: 0 1px 2px rgba(41, 43, 40, 0.05);
+  --shadow-lg: 0 24px 64px rgba(41, 43, 40, 0.14);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-micro: 150ms;
+  --t-btn: 180ms;
+  --t-modal: 220ms;
+  --t-drawer: 320ms;
+  --t-reveal: 900ms;
+
+  --z-header: 40; --z-sticky: 45; --z-overlay: 60; --z-drawer: 70; --z-toast: 80;
+}
+
+@media (min-width: 1024px) { :root { --header-h: 80px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-micro: 0ms; --t-btn: 0ms; --t-modal: 0ms; --t-drawer: 0ms; --t-reveal: 0ms; }
+}
