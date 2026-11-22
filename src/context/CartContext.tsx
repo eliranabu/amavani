@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { coupons, getProduct } from "@/lib/data";
 import { brand } from "@/lib/brand";
+import { computeDiscount, freeShippingRemaining, normalizeCouponCode } from "@/lib/pricing";
 
 export interface CartLine {
   key: string;
@@ -94,14 +95,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 
   const discount = useMemo(() => {
-    if (!coupon || !coupons[coupon]) return 0;
-    const c = coupons[coupon];
-    const d = c.type === "percent" ? (subtotal * c.value) / 100 : c.value;
-    return Math.min(Math.round(d * 100) / 100, subtotal);
+    return computeDiscount(subtotal, coupon ? coupons[coupon] : null);
   }, [coupon, subtotal]);
 
   const applyCoupon = useCallback((code: string) => {
-    const normalized = code.trim().toUpperCase();
+    const normalized = normalizeCouponCode(code);
     if (!normalized) return { ok: false, message: "יש להזין קוד קופון" };
     if (!coupons[normalized]) return { ok: false, message: "הקוד לא תקף. כדאי לבדוק שאין שגיאת הקלדה." };
     setCoupon(normalized);
@@ -112,7 +110,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     lines, coupon, isOpen, toast, ready: hydrated,
     count: lines.reduce((s, l) => s + l.qty, 0),
     subtotal, discount,
-    freeShippingLeft: Math.max(0, brand.freeShippingThreshold - (subtotal - discount)),
+    freeShippingLeft: freeShippingRemaining(subtotal, discount, brand.freeShippingThreshold),
     open: () => setOpen(true),
     close: () => setOpen(false),
     add, setQty, remove, applyCoupon,

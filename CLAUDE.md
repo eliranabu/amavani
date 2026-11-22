@@ -7,12 +7,16 @@
 - `npm run dev` – שרת פיתוח (http://localhost:3000)
 - `npm run build` – build לפרודקשן (חייב לעבור לפני כל commit)
 - `npm run lint` – בדיקת TypeScript (`tsc --noEmit`)
+- `npm test` – בדיקות יחידה (Vitest, `tests/unit`)
+- `npm run check` – lint + בדיקות + build (להריץ לפני כל commit)
+- מפת הדרכים והשלבים: `ROADMAP.md`
 
 ## Stack
 Next.js 16 (App Router) · React 19 · TypeScript · CSS רגיל (בלי Tailwind) · גופנים מקומיים דרך @fontsource.
 
 ## מבנה
 - `src/lib/brand.ts` – שם המותג, פרטי העסק, טלפון, הודעות ה-Marquee
+- `src/lib/pricing.ts` – חישובי הנחה/משלוח טהורים, משותפים ללקוח ולשרת. **מחירים נקבעים בשרת בלבד**
 - `src/lib/data.ts` – נתוני דמו: מוצרים, קטגוריות, מדריכים, קופונים, שיטות משלוח
 - `src/context/CartContext.tsx` – סל (localStorage). **מוצר Affiliate לעולם לא נכנס לסל**
 - `src/context/ListsContext.tsx` – מועדפים, נצפו לאחרונה, רשימת לידה
