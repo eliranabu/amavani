@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { demoAddOrder } from "@/lib/demo-store";
 import { GIFT_WRAP_PRICE, getProduct, shippingMethods } from "@/lib/data";
 import { deliveryWindow } from "@/lib/delivery";
 import { brand } from "@/lib/brand";
@@ -27,6 +29,7 @@ const validators: Record<Exclude<FieldName, "terms">, (v: string) => string | un
 
 export default function CheckoutPage() {
   const { lines, subtotal, discount, freeShippingLeft, clear, ready } = useCart();
+  const { user } = useAuth();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
@@ -66,8 +69,9 @@ export default function CheckoutPage() {
     return msg;
   };
 
+  const prefill: Partial<Record<FieldName, string>> = user ? { email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone } : {};
   const fieldProps = (name: Exclude<FieldName, "terms">) => ({
-    id: name, name,
+    id: name, name, defaultValue: prefill[name],
     className: `input${touched[name] && !errors[name] ? " is-valid" : ""}`,
     "aria-invalid": errors[name] ? true : undefined,
     "aria-describedby": errors[name] ? `${name}-err` : undefined,
@@ -91,6 +95,11 @@ export default function CheckoutPage() {
     setSubmitting(true);
     // TODO: כאן תתבצע יצירת הזמנה בשרת והפניה לעמוד הסליקה (Cardcom / Tranzila / Meshulam / PayPlus וכו')
     const orderNo = `${Date.now().toString().slice(-6)}`;
+    demoAddOrder({
+      orderNo, createdAt: new Date().toISOString(), email: String(fd.get("email")), phone: String(fd.get("phone")),
+      items: lines.map((l) => { const p = getProduct(l.slug)!; return { slug: l.slug, name: p.name, variant: p.variants?.find((v) => v.id === l.variantId)?.label, qty: l.qty, price: p.price }; }),
+      subtotal, discount, shipping: shippingCost + wrapCost, total, method: method.label, status: "received", gift: isGift,
+    });
     try {
       sessionStorage.setItem("last-order", JSON.stringify({ orderNo, email: fd.get("email"), total, name: fd.get("firstName"), eta: deliveryWindow(method.minDays, method.maxDays), method: method.label, gift: isGift }));
     } catch {}
@@ -139,7 +148,7 @@ export default function CheckoutPage() {
             <span>תשלום</span><span aria-hidden="true">·</span><span>אישור</span>
           </nav>
           <h1 className="page-title">השלמת הזמנה</h1>
-          <p className="muted" style={{ marginBottom: 24 }}>רכישה כאורחת – בלי צורך לפתוח חשבון.</p>
+          <p className="muted" style={{ marginBottom: 24 }}>{user ? <>מחוברת כ-<bdi>{user.email}</bdi></> : "רכישה כאורחת – בלי צורך לפתוח חשבון."}</p>
 
           {/* סיכום מקופל במובייל */}
           <div className="checkout-summary-mobile" style={{ marginBottom: 24 }}>
@@ -153,7 +162,7 @@ export default function CheckoutPage() {
             <div className="form-alert" role="alert">יש {errorCount} שדות שצריך לתקן. הן מסומנות למטה.</div>
           )}
 
-          <form ref={formRef} onSubmit={onSubmit} noValidate>
+          <form key={user?.id ?? "guest"} ref={formRef} onSubmit={onSubmit} noValidate>
             <fieldset>
               <legend>פרטי קשר</legend>
               <div className="form-grid">

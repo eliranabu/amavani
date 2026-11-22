@@ -19,6 +19,7 @@ import "@fontsource/ibm-plex-mono/latin-400.css";
 import "@fontsource/ibm-plex-mono/latin-500.css";
 import "./v4.css";
 import { CartDrawer, Toast } from "@/components/CartDrawer";
+import { AuthProvider } from "@/context/AuthContext";
 import { ListsProvider } from "@/context/ListsContext";
 import { AccessibilityMenu, CookieBanner, WhatsAppFloat } from "@/components/extras";
 import { brand } from "@/lib/brand";
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl">
       <body>
         <a href="#main" className="skip-link">דילוג לתוכן הראשי</a>
+        <AuthProvider>
         <CartProvider>
         <ListsProvider>
           <Header />
@@ -53,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CookieBanner />
         </ListsProvider>
         </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

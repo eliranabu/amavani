@@ -8,7 +8,8 @@
 - `npm run build` – build לפרודקשן (חייב לעבור לפני כל commit)
 - `npm run lint` – בדיקת TypeScript (`tsc --noEmit`)
 - `npm test` – בדיקות יחידה (Vitest, `tests/unit`)
-- `npm run check` – lint + בדיקות + build (להריץ לפני כל commit)
+- `npm run test:e2e` – בדיקות דפדפן (Playwright, דסקטופ + מובייל, כולל axe); דורש build קודם. בסביבת Claude Code: `CHROMIUM_PATH=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome`
+- `npm run check` – lint + בדיקות + build + E2E (להריץ לפני כל commit)
 - מפת הדרכים והשלבים: `ROADMAP.md`
 
 ## Stack
@@ -19,6 +20,7 @@ Next.js 16 (App Router) · React 19 · TypeScript · CSS רגיל (בלי Tailwi
 - `src/lib/pricing.ts` – חישובי הנחה/משלוח טהורים, משותפים ללקוח ולשרת. **מחירים נקבעים בשרת בלבד**
 - `src/lib/data.ts` – נתוני דמו: מוצרים, קטגוריות, מדריכים, קופונים, שיטות משלוח
 - `src/context/CartContext.tsx` – סל (localStorage). **מוצר Affiliate לעולם לא נכנס לסל**
+- `src/context/AuthContext.tsx` + `src/lib/demo-store.ts` – חשבון והזמנות במצב דמו (localStorage). **להחליף ב-Supabase; הממשק נשאר**
 - `src/context/ListsContext.tsx` – מועדפים, נצפו לאחרונה, רשימת לידה
 - `src/app/tokens.css` – Design Tokens (צבעים, ריווח, תנועה)
 - `src/app/globals.css` – בסיס הרכיבים; `src/app/v4.css` – השפה העיצובית הנוכחית (נטען אחרון ודורס)
@@ -40,6 +42,6 @@ Next.js 16 (App Router) · React 19 · TypeScript · CSS רגיל (בלי Tailwi
 ## מה פתוח (TODO)
 - חיבור סליקה ישראלית (Cardcom / Tranzila / Meshulam / PayPlus) כולל bit ו-Apple Pay – `src/app/checkout/page.tsx`
 - העברת `data.ts` ל-Backend/CMS (Shopify Storefront / Supabase / Sanity)
-- הזמנות, מיילים, מעקב משלוחים, חשבונות משתמש
+- הזמנות, מיילים ומעקב משלוחים אמיתיים; חשבונות כרגע דמו מקומי
 - תמונות מוצר אמיתיות במקום תמונות Unsplash הזמניות
 - פרטי העסק ב-`brand.ts` ונוסחים משפטיים עם עורך דין

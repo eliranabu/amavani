@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "test": "vitest run",
-    "check": "npm run lint && npm test && npm run build"
+    "check": "npm run lint && npm test && npm run build && npm run test:e2e",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource-variable/unbounded": "^5.3.0",
@@ -21,6 +22,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Breadcrumbs } from "@/components/ui";
 import { IconAlert } from "@/components/Icons";
+import { demoFindOrder } from "@/lib/demo-store";
 
 export default function TrackPage() {
   const [result, setResult] = useState<string | null>(null);
@@ -18,6 +19,8 @@ export default function TrackPage() {
         if (!/^\d{4,}$/.test(no) || !/^0\d{8,9}$/.test(String(fd.get("phone")).replace(/\D/g, ""))) { setErr("צריך מספר הזמנה (ספרות בלבד) ומספר טלפון תקין"); setResult(null); return; }
         setErr(null);
         // TODO: חיבור ל-API של חברת השילוח (צ'יטה / HFD / דואר ישראל)
+        const found = demoFindOrder(no, String(fd.get("phone")));
+        if (!found) { setErr("לא נמצאה הזמנה עם הפרטים האלה. כדאי לבדוק את המספר ואת הטלפון שהוזן בהזמנה."); setResult(null); return; }
         setResult(`הזמנה #${no} נקלטה ונמצאת בהכנה למשלוח. מספר מעקב יישלח ב-SMS כשהחבילה תצא.`);
       }}>
         <div className="field"><label htmlFor="order">מספר הזמנה</label><input id="order" name="order" className="input" inputMode="numeric" /></div>
