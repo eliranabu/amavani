@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { ageLabels, products } from "@/lib/data";
-import type { AgeGroup } from "@/lib/types";
-import { ProductListing } from "@/components/ProductListing";
+import { Suspense } from "react";
+import { products } from "@/lib/data";
+import { ProductsView } from "./ProductsView";
 import { Breadcrumbs } from "@/components/ui";
 
 export const metadata: Metadata = { title: "כל המוצרים" };
 
-export default async function AllProducts({ searchParams }: { searchParams: Promise<{ age?: string }> }) {
-  const { age } = await searchParams;
-  const initialAges = age && age in ageLabels ? [age as AgeGroup] : [];
+export default function AllProducts() {
   return (
     <div className="container">
       <Breadcrumbs items={[{ label: "בית", href: "/" }, { label: "כל המוצרים" }]} />
@@ -18,7 +16,9 @@ export default async function AllProducts({ searchParams }: { searchParams: Prom
           <p style={{ marginTop: 16 }}>{products.length} מוצרים שבחרנו לאמא, לתינוק ולפעוט. כל אחד מהם עבר אצלנו בבית.</p>
         </div>
       </header>
-      <ProductListing key={age ?? "all"} products={products} initialAges={initialAges} />
+      <Suspense fallback={<p className="muted">טוען מוצרים…</p>}>
+        <ProductsView />
+      </Suspense>
     </div>
   );
 }

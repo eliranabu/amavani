@@ -3,6 +3,8 @@ import { categories, guides, products } from "@/lib/data";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.co.il";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = ["", "/products", "/creator-picks", "/deals", "/guides", "/about", "/faq", "/contact", "/registry", "/gift-card"];
   return [

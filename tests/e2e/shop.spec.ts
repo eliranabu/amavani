@@ -43,7 +43,7 @@ test("סל וקנייה: הוספה, קופון, ולידציית checkout, הז
   await page.fill("#house", "5");
   await page.check("input[name=terms]");
   await page.locator("main form button[type=submit]").click();
-  await page.waitForURL("**/checkout/success");
+  await page.waitForURL(/\/checkout\/success\/?$/);
   const orderNo = (await page.locator("strong", { hasText: /^#\d+$/ }).first().textContent())!.replace("#", "");
 
   await page.goto("/track");

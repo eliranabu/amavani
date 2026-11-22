@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   title: { default: `${brand.name} | ${brand.tagline}`, template: `%s | ${brand.name}` },
   description: "חנות בוטיק לאמא ולתינוק: מוצרים שנבחרו בקפידה, מידע שקוף, משלוחים לכל הארץ.",
   icons: { icon: "/favicon.svg" },
+  // גרסת תצוגה ללקוחה: לא לאנדקס
+  ...(process.env.STATIC_EXPORT === "1" || process.env.PREVIEW === "1" ? { robots: { index: false, follow: false } } : {}),
 };
 
 export const viewport: Viewport = {
